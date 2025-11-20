@@ -1163,6 +1163,14 @@ body {
     .profile-content {
         grid-template-columns: 1fr;
     }
+    
+    .calendar-days {
+        gap: 8px;
+    }
+    
+    .calendar-grid {
+        padding: 15px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1176,18 +1184,19 @@ body {
     }
     
     .top-bar {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
     }
     
-    .top-bar-left, .top-bar-right {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
+    .top-bar-left {
+        flex: 1;
+        min-width: 200px;
     }
     
     .top-bar-right {
         flex-wrap: wrap;
+        gap: 10px;
     }
     
     .stats-container {
@@ -1216,6 +1225,46 @@ body {
     .form-row {
         grid-template-columns: 1fr;
     }
+    
+    .calendar-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .calendar-nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .calendar-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .calendar-day {
+        min-height: 80px;
+        padding: 5px;
+    }
+    
+    .calendar-day-number {
+        font-size: 0.85em;
+    }
+    
+    .calendar-task-item {
+        font-size: 0.7em;
+        padding: 3px 5px;
+    }
+    
+    .legend-items {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .profile-dropdown-menu {
+        right: 0;
+        left: auto;
+        min-width: 250px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1233,6 +1282,58 @@ body {
     
     .task-header h3 {
         font-size: 1.2em;
+    }
+    
+    .calendar-weekday {
+        font-size: 0.75em;
+        padding: 5px;
+    }
+    
+    .calendar-day {
+        min-height: 60px;
+        padding: 3px;
+    }
+    
+    .calendar-day-number {
+        font-size: 0.8em;
+        margin-bottom: 4px;
+    }
+    
+    .calendar-task-item {
+        font-size: 0.65em;
+        padding: 2px 4px;
+    }
+    
+    .calendar-task-count {
+        font-size: 0.7em;
+        padding: 1px 4px;
+    }
+    
+    .calendar-nav button {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+    
+    .calendar-title {
+        font-size: 1.3em;
+    }
+    
+    .task-modal {
+        padding: 20px;
+        max-width: 95%;
+        margin: 10px;
+    }
+    
+    .profile-dropdown-menu {
+        min-width: 220px;
+    }
+    
+    .dropdown-username {
+        font-size: 0.9em;
+    }
+    
+    .dropdown-email {
+        font-size: 0.8em;
     }
 }
 

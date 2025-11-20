@@ -265,6 +265,17 @@ public class TaskServlet extends HttpServlet {
         request.getRequestDispatcher("calendar.jsp").forward(request, response);
     }
     
+    private void showCalendar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int userId = (int) request.getSession().getAttribute("userId");
+        
+        // Get all tasks for the user
+        List<Task> tasks = taskDAO.getAllTasks(userId);
+        request.setAttribute("tasks", tasks);
+        
+        request.getRequestDispatcher("calendar.jsp").forward(request, response);
+    }
+    
     private void quickUpdateStatus(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
