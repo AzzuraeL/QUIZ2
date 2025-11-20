@@ -31,10 +31,40 @@
                     <button id="themeToggle" class="btn-icon" title="Toggle Theme">
                         <span class="theme-icon">Theme</span>
                     </button>
-                    <a href="ProfileServlet" class="btn-icon" title="Profile">
-                        <span>Profile</span>
-                    </a>
-                    <a href="LogoutServlet" class="btn-logout">Logout</a>
+                    <div class="profile-dropdown-container">
+                        <button class="profile-avatar-btn" id="profileDropdownBtn" title="Profile Menu">
+                            ${sessionScope.userName.substring(0, 1).toUpperCase()}
+                        </button>
+                        <div class="profile-dropdown-menu" id="profileDropdownMenu">
+                            <div class="dropdown-header">
+                                <div class="dropdown-avatar">
+                                    ${sessionScope.userName.substring(0, 1).toUpperCase()}
+                                </div>
+                                <div class="dropdown-user-info">
+                                    <div class="dropdown-username">${sessionScope.userName}</div>
+                                    <div class="dropdown-email">${sessionScope.user.email}</div>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="ProfileServlet" class="dropdown-item">
+                                <span class="dropdown-icon">👤</span>
+                                <span>My Profile</span>
+                            </a>
+                            <a href="TaskServlet?action=dashboard" class="dropdown-item">
+                                <span class="dropdown-icon">📊</span>
+                                <span>Dashboard</span>
+                            </a>
+                            <a href="TaskServlet?action=list" class="dropdown-item">
+                                <span class="dropdown-icon">✓</span>
+                                <span>My Tasks</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="LogoutServlet" class="dropdown-item dropdown-logout">
+                                <span class="dropdown-icon">🚪</span>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -135,5 +165,6 @@
     
     <script src="js/theme.js"></script>
     <script src="js/sidebar.js"></script>
+    <script src="js/profile-dropdown.js"></script>
 </body>
 </html>

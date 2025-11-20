@@ -43,6 +43,8 @@ public class ProfileServlet extends HttpServlet {
         
         if ("update".equals(action)) {
             updateProfile(request, response, userId);
+        } else if ("changePassword".equals(action)) {
+            changePassword(request, response, userId);
         }
     }
     
@@ -75,6 +77,44 @@ public class ProfileServlet extends HttpServlet {
             request.setAttribute("user", user);
         } else {
             request.setAttribute("error", "Failed to update profile");
+            request.setAttribute("user", user);
+        }
+        
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+    }
+    
+    private void changePassword(HttpServletRequest request, HttpServletResponse response, int userId)
+            throws ServletException, IOException {
+        String currentPassword = request.getParameter("currentPassword");
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
+        
+        User user = userDAO.getUserById(userId);
+        
+        // Validate passwords match
+        if (!newPassword.equals(confirmPassword)) {
+            request.setAttribute("error", "New passwords do not match");
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
+        
+        // Validate password length
+        if (newPassword.length() < 6) {
+            request.setAttribute("error", "Password must be at least 6 characters long");
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
+        
+        // Attempt to update password
+        boolean success = userDAO.updatePassword(userId, currentPassword, newPassword);
+        
+        if (success) {
+            request.setAttribute("success", "Password changed successfully!");
+            request.setAttribute("user", user);
+        } else {
+            request.setAttribute("error", "Current password is incorrect");
             request.setAttribute("user", user);
         }
         

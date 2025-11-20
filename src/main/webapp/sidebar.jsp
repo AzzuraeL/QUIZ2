@@ -16,6 +16,10 @@
             <span class="nav-text">My Tasks</span>
         </a>
         
+        <a href="TaskServlet?action=calendar" class="nav-item ${pageContext.request.servletPath == '/calendar.jsp' ? 'active' : ''}">
+            <span class="nav-text">Calendar</span>
+        </a>
+        
         <a href="ProfileServlet" class="nav-item ${pageContext.request.servletPath == '/profile.jsp' ? 'active' : ''}">
             <span class="nav-text">Profile</span>
         </a>

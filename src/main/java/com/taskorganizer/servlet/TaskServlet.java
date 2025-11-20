@@ -41,6 +41,9 @@ public class TaskServlet extends HttpServlet {
             case "dashboard":
                 showDashboard(request, response);
                 break;
+            case "calendar":
+                showCalendar(request, response);
+                break;
             case "edit":
                 showEditForm(request, response);
                 break;
@@ -249,6 +252,17 @@ public class TaskServlet extends HttpServlet {
         request.setAttribute("recentTasks", recentTasks);
         
         request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+    }
+    
+    private void showCalendar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int userId = (int) request.getSession().getAttribute("userId");
+        
+        // Get all tasks for calendar view
+        List<Task> tasks = taskDAO.getAllTasks(userId);
+        request.setAttribute("tasks", tasks);
+        
+        request.getRequestDispatcher("calendar.jsp").forward(request, response);
     }
     
     private void quickUpdateStatus(HttpServletRequest request, HttpServletResponse response)

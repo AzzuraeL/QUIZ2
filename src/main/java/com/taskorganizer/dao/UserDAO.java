@@ -217,6 +217,48 @@ public class UserDAO {
     }
     
     /**
+     * Update user's password
+     * @param userId User ID
+     * @param currentPassword Current password (plain text)
+     * @param newPassword New password (plain text)
+     * @return true if password updated successfully, false otherwise
+     */
+    public boolean updatePassword(int userId, String currentPassword, String newPassword) {
+        // First, verify the current password
+        String selectSql = "SELECT password FROM users WHERE id = ?";
+        String updateSql = "UPDATE users SET password = ? WHERE id = ?";
+        
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement selectStmt = conn.prepareStatement(selectSql)) {
+            
+            selectStmt.setInt(1, userId);
+            
+            try (ResultSet rs = selectStmt.executeQuery()) {
+                if (rs.next()) {
+                    String storedPassword = rs.getString("password");
+                    
+                    // Verify current password matches
+                    if (passwordEncoder.matches(currentPassword, storedPassword)) {
+                        // Hash the new password
+                        String hashedNewPassword = passwordEncoder.encode(newPassword);
+                        
+                        // Update the password
+                        try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                            updateStmt.setString(1, hashedNewPassword);
+                            updateStmt.setInt(2, userId);
+                            
+                            return updateStmt.executeUpdate() > 0;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    /**
      * Get all users (for admin purposes)
      * @return List of all users
      */

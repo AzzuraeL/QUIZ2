@@ -1237,12 +1237,462 @@ body {
 }
 
 /* =========================================
+   Profile Dropdown Menu
+   ========================================= */
+
+.profile-dropdown-container {
+    position: relative;
+}
+
+.profile-avatar-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    color: white;
+    border: 2px solid var(--border-color);
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.profile-avatar-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+}
+
+.profile-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px var(--shadow-medium);
+    min-width: 280px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.profile-dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dropdown-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.dropdown-user-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.dropdown-username {
+    font-weight: 600;
+    font-size: 1em;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-email {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.95em;
+}
+
+.dropdown-item:hover {
+    background: var(--bg-primary);
+}
+
+.dropdown-icon {
+    font-size: 1.2em;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 8px 0;
+}
+
+.dropdown-logout {
+    color: #ff6b6b;
+}
+
+.dropdown-logout:hover {
+    background: rgba(255, 107, 107, 0.1);
+}
+
+/* =========================================
    Animations
    ========================================= */
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   Calendar View Styles
+   ========================================= */
+
+.calendar-container {
+    padding: 30px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background: var(--card-bg);
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.calendar-nav button {
+    background: var(--bg-gradient-start);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.calendar-nav button:hover {
+    background: var(--bg-gradient-end);
+    transform: translateY(-2px);
+}
+
+.calendar-title {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.calendar-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.calendar-grid {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding: 10px;
+    font-size: 0.9em;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.calendar-day {
+    min-height: 120px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+    background: var(--bg-primary);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.calendar-day:hover {
+    border-color: var(--bg-gradient-start);
+    box-shadow: 0 4px 12px var(--shadow-light);
+    transform: translateY(-2px);
+}
+
+.calendar-day.today {
+    border: 2px solid var(--bg-gradient-start);
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.calendar-day.other-month {
+    opacity: 0.4;
+}
+
+.calendar-day-number {
+    font-weight: 700;
+    font-size: 0.95em;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.calendar-day.today .calendar-day-number {
+    color: var(--bg-gradient-start);
+    font-size: 1.1em;
+}
+
+.calendar-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.calendar-task-item {
+    font-size: 0.75em;
+    padding: 4px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.calendar-task-item:hover {
+    transform: scale(1.05);
+}
+
+.calendar-task-item.priority-High {
+    background: var(--color-high);
+    color: white;
+}
+
+.calendar-task-item.priority-Medium {
+    background: var(--color-medium);
+    color: #333;
+}
+
+.calendar-task-item.priority-Low {
+    background: var(--color-completed);
+    color: white;
+}
+
+.calendar-task-item.status-Completed {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.calendar-task-count {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--bg-gradient-start);
+    color: white;
+    font-size: 0.75em;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.calendar-legend {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.calendar-legend h3 {
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.legend-items {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.legend-label {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+/* Task Modal for Calendar */
+.task-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-modal-overlay.active {
+    display: flex;
+}
+
+.task-modal {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px var(--shadow-heavy);
+    animation: slideDown 0.3s ease;
+}
+
+.task-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 20px;
+}
+
+.task-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.task-modal-close:hover {
+    color: var(--text-primary);
+}
+
+/* =========================================
+   Password Change Form
+   ========================================= */
+
+.password-section {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 2px solid var(--border-color);
+}
+
+.password-section h3 {
+    color: var(--text-primary);
+    margin-bottom: 15px;
+}
+
+.password-requirements {
+    background: rgba(102, 126, 234, 0.1);
+    border-left: 4px solid var(--bg-gradient-start);
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.password-requirements h4 {
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    font-size: 0.95em;
+}
+
+.password-requirements ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.password-requirements li {
+    padding: 5px 0;
+    color: var(--text-secondary);
+    font-size: 0.85em;
+}
+
+.password-requirements li:before {
+    content: "✓ ";
+    color: var(--color-completed);
+    font-weight: bold;
+    margin-right: 5px;
 }
 
 /* =========================================

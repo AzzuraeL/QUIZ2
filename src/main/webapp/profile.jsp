@@ -31,10 +31,40 @@
                     <button id="themeToggle" class="btn-icon" title="Toggle Theme">
                         <span class="theme-icon">Theme</span>
                     </button>
-                    <a href="TaskServlet?action=dashboard" class="btn-icon" title="Dashboard">
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="LogoutServlet" class="btn-logout">Logout</a>
+                    <div class="profile-dropdown-container">
+                        <button class="profile-avatar-btn" id="profileDropdownBtn" title="Profile Menu">
+                            ${sessionScope.userName.substring(0, 1).toUpperCase()}
+                        </button>
+                        <div class="profile-dropdown-menu" id="profileDropdownMenu">
+                            <div class="dropdown-header">
+                                <div class="dropdown-avatar">
+                                    ${sessionScope.userName.substring(0, 1).toUpperCase()}
+                                </div>
+                                <div class="dropdown-user-info">
+                                    <div class="dropdown-username">${sessionScope.userName}</div>
+                                    <div class="dropdown-email">${sessionScope.user.email}</div>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="ProfileServlet" class="dropdown-item">
+                                <span class="dropdown-icon">👤</span>
+                                <span>My Profile</span>
+                            </a>
+                            <a href="TaskServlet?action=dashboard" class="dropdown-item">
+                                <span class="dropdown-icon">📊</span>
+                                <span>Dashboard</span>
+                            </a>
+                            <a href="TaskServlet?action=list" class="dropdown-item">
+                                <span class="dropdown-icon">✓</span>
+                                <span>My Tasks</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="LogoutServlet" class="dropdown-item dropdown-logout">
+                                <span class="dropdown-icon">🚪</span>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -117,10 +147,53 @@
                                 </button>
                             </div>
                         </form>
+                    </div>
+                    
+                    <!-- Change Password Section -->
+                    <div class="profile-form-card password-section">
+                        <h3>Security & Password</h3>
                         
-                        <div class="profile-info-box">
-                            <h4>Security Note</h4>
-                            <p>Your password is securely encrypted and cannot be displayed. To change your password, please contact support.</p>
+                        <button type="button" id="changePasswordBtn" class="btn btn-secondary" style="width: 100%;">
+                            Change Password
+                        </button>
+                        
+                        <div id="changePasswordForm" style="display: none; margin-top: 20px;">
+                            <form action="ProfileServlet" method="post" class="profile-form">
+                                <input type="hidden" name="action" value="changePassword">
+                                
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password <span class="required">*</span></label>
+                                    <input type="password" id="currentPassword" name="currentPassword" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="newPassword">New Password <span class="required">*</span></label>
+                                    <input type="password" id="newPassword" name="newPassword" required minlength="6">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm New Password <span class="required">*</span></label>
+                                    <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+                                </div>
+                                
+                                <div class="password-requirements">
+                                    <h4>Password Requirements:</h4>
+                                    <ul>
+                                        <li>At least 6 characters long</li>
+                                        <li>Use a mix of letters and numbers for better security</li>
+                                        <li>Avoid using easily guessable passwords</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        Update Password
+                                    </button>
+                                    <button type="button" id="cancelPasswordBtn" class="btn btn-secondary">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -130,6 +203,7 @@
     
     <script src="js/theme.js"></script>
     <script src="js/sidebar.js"></script>
+    <script src="js/profile-dropdown.js"></script>
     <script>
         // Toggle edit profile form
         document.getElementById('editProfileBtn').addEventListener('click', function() {
@@ -141,6 +215,23 @@
             document.getElementById('editProfileForm').style.display = 'none';
             document.getElementById('editProfileBtn').style.display = 'block';
         });
+        
+        // Toggle password change form
+        const changePasswordBtn = document.getElementById('changePasswordBtn');
+        if (changePasswordBtn) {
+            changePasswordBtn.addEventListener('click', function() {
+                document.getElementById('changePasswordForm').style.display = 'block';
+                this.style.display = 'none';
+            });
+        }
+        
+        const cancelPasswordBtn = document.getElementById('cancelPasswordBtn');
+        if (cancelPasswordBtn) {
+            cancelPasswordBtn.addEventListener('click', function() {
+                document.getElementById('changePasswordForm').style.display = 'none';
+                document.getElementById('changePasswordBtn').style.display = 'block';
+            });
+        }
     </script>
 </body>
 </html>
