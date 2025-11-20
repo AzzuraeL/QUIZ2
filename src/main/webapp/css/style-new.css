@@ -2153,14 +2153,28 @@ body {
 /* Mobile specific styles */
 @media (max-width: 768px) {
     .sidebar {
-        transform: translateX(-100%);
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        z-index: 1000;
+        transform: translateX(0);
+        transition: transform 0.3s ease;
     }
     
-    .sidebar:not(.hidden) {
-        transform: translateX(0);
+    .sidebar.hidden {
+        transform: translateX(-100%);
     }
     
     .main-content {
         margin-left: 0 !important;
+    }
+    
+    .sidebar-overlay {
+        display: none;
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
     }
 }

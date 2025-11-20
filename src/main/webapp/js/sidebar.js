@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const mainContent = document.querySelector('.main-content');
     const appContainer = document.querySelector('.app-container');
     
-    // Initialize sidebar as hidden on page load
-    sidebar.classList.add('hidden');
+    // Initialize sidebar as hidden on mobile only
+    if (window.innerWidth <= 768) {
+        sidebar.classList.add('hidden');
+    }
     
     // Create overlay for mobile
     const overlay = document.createElement('div');
@@ -23,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Close sidebar when clicking overlay
     overlay.addEventListener('click', function() {
-        sidebar.classList.remove('hidden');
         sidebar.classList.add('hidden');
         overlay.classList.remove('active');
     });
