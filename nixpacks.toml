@@ -1,7 +1,7 @@
 providers = ["java"]
 
 [phases.setup]
-nixPkgs = ["maven"]
+nixPkgs = ["maven", "jdk17"]
 
 [phases.build]
 cmds = ["mvn clean package -DskipTests"]
