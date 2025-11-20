@@ -8,7 +8,7 @@
     </div>
     
     <nav class="sidebar-nav">
-        <a href="dashboard.jsp" class="nav-item ${pageContext.request.servletPath == '/dashboard.jsp' ? 'active' : ''}">
+        <a href="TaskServlet?action=dashboard" class="nav-item ${pageContext.request.servletPath == '/dashboard.jsp' ? 'active' : ''}">
             <span class="nav-text">Dashboard</span>
         </a>
         
