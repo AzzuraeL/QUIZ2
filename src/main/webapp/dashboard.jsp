@@ -183,9 +183,24 @@
         </div>
     </div>
     
+    <script>
+        // Pass tasks data for notifications
+        const tasksData = [
+            <c:forEach var="task" items="${recentTasks}" varStatus="status">
+            {
+                id: ${task.id},
+                title: "${task.title}".replace(/"/g, '&quot;'),
+                priority: "${task.priority}",
+                status: "${task.status}",
+                dueDate: "<fmt:formatDate value='${task.dueDate}' pattern='yyyy-MM-dd'/>"
+            }<c:if test="${!status.last}">,</c:if>
+            </c:forEach>
+        ];
+    </script>
     <script src="js/theme.js"></script>
     <script src="js/quick-status.js"></script>
     <script src="js/sidebar.js"></script>
     <script src="js/profile-dropdown.js"></script>
+    <script src="js/task-notifications.js"></script>
 </body>
 </html>

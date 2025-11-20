@@ -1,6 +1,8 @@
 package com.taskorganizer.servlet;
 
+import com.taskorganizer.dao.TaskDAO;
 import com.taskorganizer.dao.UserDAO;
+import com.taskorganizer.model.Task;
 import com.taskorganizer.model.User;
 
 import javax.servlet.ServletException;
@@ -10,15 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet("/ProfileServlet")
 public class ProfileServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private UserDAO userDAO;
+    private TaskDAO taskDAO;
     
     @Override
     public void init() throws ServletException {
         userDAO = new UserDAO();
+        taskDAO = new TaskDAO();
     }
     
     @Override
@@ -29,6 +35,14 @@ public class ProfileServlet extends HttpServlet {
         
         User user = userDAO.getUserById(userId);
         request.setAttribute("user", user);
+        
+        // Get task statistics for the profile page
+        Map<String, Integer> stats = taskDAO.getTaskStatistics(userId);
+        request.setAttribute("stats", stats);
+        
+        // Get tasks for notifications
+        List<Task> tasks = taskDAO.getAllTasks(userId);
+        request.setAttribute("tasks", tasks);
         
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }

@@ -114,10 +114,46 @@
                                     </div>
                                 </div>
                             </c:if>
+                            
+                            <div class="profile-stat-item" style="border-left-color: var(--color-total);">
+                                <div class="profile-stat-info">
+                                    <div class="profile-stat-label">Total Tasks</div>
+                                    <div class="profile-stat-value">
+                                        ${stats.Total != null ? stats.Total : 0}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-stat-item" style="border-left-color: var(--color-completed);">
+                                <div class="profile-stat-info">
+                                    <div class="profile-stat-label">Completed Tasks</div>
+                                    <div class="profile-stat-value">
+                                        ${stats.Completed != null ? stats.Completed : 0}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-actions-grid">
+                            <a href="TaskServlet?action=dashboard" class="profile-action-card">
+                                <div class="profile-action-icon">📊</div>
+                                <div class="profile-action-title">Dashboard</div>
+                                <div class="profile-action-description">View overview</div>
+                            </a>
+                            <a href="TaskServlet?action=list" class="profile-action-card">
+                                <div class="profile-action-icon">✓</div>
+                                <div class="profile-action-title">My Tasks</div>
+                                <div class="profile-action-description">Manage tasks</div>
+                            </a>
+                            <a href="TaskServlet?action=calendar" class="profile-action-card">
+                                <div class="profile-action-icon">📅</div>
+                                <div class="profile-action-title">Calendar</div>
+                                <div class="profile-action-description">View schedule</div>
+                            </a>
                         </div>
                         
                         <button type="button" id="editProfileBtn" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
-                            Edit Profile
+                            📝 Edit Profile Information
                         </button>
                     </div>
                     
@@ -151,10 +187,13 @@
                     
                     <!-- Change Password Section -->
                     <div class="profile-form-card password-section">
-                        <h3>Security & Password</h3>
+                        <h3>🔒 Security & Password</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 15px; font-size: 0.9em;">
+                            Keep your account secure by regularly updating your password
+                        </p>
                         
                         <button type="button" id="changePasswordBtn" class="btn btn-secondary" style="width: 100%;">
-                            Change Password
+                            🔑 Change Password
                         </button>
                         
                         <div id="changePasswordForm" style="display: none; margin-top: 20px;">
@@ -201,9 +240,24 @@
         </div>
     </div>
     
+    <script>
+        // Pass tasks data for notifications
+        const tasksData = [
+            <c:forEach var="task" items="${tasks}" varStatus="status">
+            {
+                id: ${task.id},
+                title: "${task.title}".replace(/"/g, '&quot;'),
+                priority: "${task.priority}",
+                status: "${task.status}",
+                dueDate: "<fmt:formatDate value='${task.dueDate}' pattern='yyyy-MM-dd'/>"
+            }<c:if test="${!status.last}">,</c:if>
+            </c:forEach>
+        ];
+    </script>
     <script src="js/theme.js"></script>
     <script src="js/sidebar.js"></script>
     <script src="js/profile-dropdown.js"></script>
+    <script src="js/task-notifications.js"></script>
     <script>
         // Toggle edit profile form
         document.getElementById('editProfileBtn').addEventListener('click', function() {
