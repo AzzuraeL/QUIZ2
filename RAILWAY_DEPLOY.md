@@ -44,9 +44,34 @@ git push -u origin main
    ```
 
 ## Step 6: Initialize Database Schema
-1. Connect to Railway MySQL using provided credentials
-2. Run the database schema SQL file to create tables
-3. Or use Railway's MySQL console to execute your schema
+**IMPORTANT: You MUST run this SQL to create the tables!**
+
+### Option 1: Using Railway Web Console (Easiest)
+1. In Railway dashboard, click on your **MySQL** service
+2. Click the "Data" tab
+3. Click "Query" or open the query console
+4. Copy and paste the entire contents of `railway-setup.sql`
+5. Click "Run" or press Ctrl+Enter
+6. You should see: "Tables created successfully!"
+
+### Option 2: Using MySQL Client
+```bash
+# Get connection details from Railway MySQL service
+# Connect using the command provided in Railway dashboard
+mysql -h [HOST] -P [PORT] -u [USER] -p[PASSWORD] railway < railway-setup.sql
+```
+
+### Option 3: Using DBeaver/MySQL Workbench
+1. Get connection details from Railway MySQL Variables tab
+2. Create new connection with Railway credentials
+3. Connect to the `railway` database
+4. Open and execute `railway-setup.sql`
+
+**Verify Tables Created:**
+```sql
+SHOW TABLES;
+-- Should show: users, tasks
+```
 
 ## Step 7: Access Your Application
 1. Go to "Settings" tab in your service
