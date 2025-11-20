@@ -1,0 +1,83 @@
+package com.taskorganizer.servlet;
+
+import com.taskorganizer.dao.UserDAO;
+import com.taskorganizer.model.User;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+
+@WebServlet("/ProfileServlet")
+public class ProfileServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private UserDAO userDAO;
+    
+    @Override
+    public void init() throws ServletException {
+        userDAO = new UserDAO();
+    }
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int userId = (int) session.getAttribute("userId");
+        
+        User user = userDAO.getUserById(userId);
+        request.setAttribute("user", user);
+        
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int userId = (int) session.getAttribute("userId");
+        
+        String action = request.getParameter("action");
+        
+        if ("update".equals(action)) {
+            updateProfile(request, response, userId);
+        }
+    }
+    
+    private void updateProfile(HttpServletRequest request, HttpServletResponse response, int userId)
+            throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        
+        User user = userDAO.getUserById(userId);
+        
+        // Check if email is changed and already exists
+        if (!user.getEmail().equals(email) && userDAO.emailExists(email)) {
+            request.setAttribute("error", "Email already in use by another account");
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
+        
+        user.setName(name);
+        user.setEmail(email);
+        
+        boolean success = userDAO.updateUser(user);
+        
+        if (success) {
+            // Update session
+            request.getSession().setAttribute("userName", name);
+            request.getSession().setAttribute("user", user);
+            
+            request.setAttribute("success", "Profile updated successfully!");
+            request.setAttribute("user", user);
+        } else {
+            request.setAttribute("error", "Failed to update profile");
+            request.setAttribute("user", user);
+        }
+        
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+    }
+}
