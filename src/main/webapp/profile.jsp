@@ -31,7 +31,7 @@
                     <button id="themeToggle" class="btn-icon" title="Toggle Theme">
                         <span class="theme-icon">Theme</span>
                     </button>
-                    <a href="dashboard.jsp" class="btn-icon" title="Dashboard">
+                    <a href="TaskServlet?action=dashboard" class="btn-icon" title="Dashboard">
                         <span>Dashboard</span>
                     </a>
                     <a href="LogoutServlet" class="btn-logout">Logout</a>
