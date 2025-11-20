@@ -2,13 +2,15 @@ package com.taskorganizer.dao;
 
 import com.taskorganizer.model.User;
 import com.taskorganizer.util.DatabaseUtil;
-import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
+    
+    private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     
     /**
      * Register a new user
@@ -22,7 +24,7 @@ public class UserDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
             // Hash the password before storing
-            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
             
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getEmail());
@@ -64,7 +66,7 @@ public class UserDAO {
                     String hashedPassword = rs.getString("password");
                     
                     // Verify password
-                    if (BCrypt.checkpw(password, hashedPassword)) {
+                    if (passwordEncoder.matches(password, hashedPassword)) {
                         User user = new User();
                         user.setId(rs.getInt("id"));
                         user.setName(rs.getString("name"));

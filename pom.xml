@@ -56,6 +56,20 @@
             <version>0.4</version>
         </dependency>
         
+        <!-- Spring Security Crypto for BCrypt (more stable) -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>5.7.11</version>
+        </dependency>
+        
+        <!-- Commons Logging (required by spring-security-crypto) -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        
         <!-- Apache Commons Lang for utilities -->
         <dependency>
             <groupId>org.apache.commons</groupId>
