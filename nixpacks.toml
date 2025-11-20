@@ -1,11 +1,10 @@
 providers = ["java"]
 
-[phases.build]
-nixPkgs = ["openjdk17", "maven"]
-cmds = ["mvn clean package -DskipTests"]
-
 [phases.setup]
-nixPkgs = ["openjdk17"]
+nixPkgs = ["maven"]
+
+[phases.build]
+cmds = ["mvn clean package -DskipTests"]
 
 [start]
 cmd = "java -jar target/dependency/webapp-runner.jar --port $PORT target/*.war"
